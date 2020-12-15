@@ -7,9 +7,9 @@ final class AppTests: XCTestCase {
         defer { app.shutdown() }
         try configure(app)
 
-        try app.test(.GET, "hello", afterResponse: { res in
-            XCTAssertEqual(res.status, .ok)
-            XCTAssertEqual(res.body.string, "Hello, world!")
+        try app.test(.GET, "guitarsales", afterResponse: { res in
+            XCTAssertEqual(res.status, .badRequest)
+            XCTAssertEqual(res.body.string, "{\"error\":true,\"reason\":\"productId is required, quantity is required\"}")
         })
     }
 }
