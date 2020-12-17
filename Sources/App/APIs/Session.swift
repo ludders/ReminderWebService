@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 protocol Session {
     func dataTask(with url: URL, _ completion: @escaping (Data) -> Void)

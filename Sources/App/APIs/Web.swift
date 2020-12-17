@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 class Web {
     let session: Session
@@ -18,9 +21,10 @@ class Web {
         let semaphore = DispatchSemaphore(value: 0)
         var object: T?
 
+        print(url)
         session.dataTask(with: url) { data in
             let decoder = JSONDecoder()
-            object = try! decoder.decode(T.self, from: data)
+            object = try? decoder.decode(T.self, from: data)
             semaphore.signal()
         }
         _ = semaphore.wait(timeout: .distantFuture)
