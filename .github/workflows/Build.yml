@@ -26,10 +26,14 @@ jobs:
           project_id: ${{ secrets.PROJECT_ID }}
           export_default_credentials: true
 
-      # Build docker image
-      - name: Image
+      # Build the Docker image
+      - name: Build
         run: |-
-          docker build --build-arg -t eu.gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA .
+          docker build \
+            --tag "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA" \
+            --build-arg GITHUB_SHA="$GITHUB_SHA" \
+            --build-arg GITHUB_REF="$GITHUB_REF" \
+            .
 
       # Configure docker to use the gcloud command-line tool as a credential helper
       - run: |
